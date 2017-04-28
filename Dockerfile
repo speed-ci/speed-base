@@ -10,7 +10,7 @@ RUN apk --no-cache add git curl jq bash
 COPY init.sh /init.sh
 RUN chmod +x /init.sh
 RUN ls -l /
-RUN /bin/bash -c /init.sh
+RUN RUN ["/bin/bash", "-c", "/init.sh"]
 
 ONBUILD COPY docker-entrypoint.sh /docker-entrypoint.sh
 ONBUILD RUN chmod +x /docker-entrypoint.sh
