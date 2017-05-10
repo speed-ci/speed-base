@@ -52,6 +52,18 @@ init_env () {
     fi    
 }
 
+check_docker_env () {
+    if [[ ! -f $DOCKERFILE ]];then
+        printerror "Le fichier $DOCKERFILE n’est pas présent, il doit se trouver à la racine du projet"
+        exit 1
+    fi
+    DOCKER_SOCKET="/var/run/docker.sock"
+    if [[ ! -e $DOCKER_SOCKET ]];then
+        printerror "La socket docker $DOCKER_SOCKET n’est pas présente, elle doit être montée au docker run"
+        exit 1
+    fi    
+}
+
 REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
 GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
 GITLAB_API_URL="$GITLAB_URL/api/v4"
