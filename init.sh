@@ -33,21 +33,21 @@ init_env () {
         exit 1
     fi    
     if [[ -z $GITLAB_TOKEN ]]; then
-        printerror "La variable GITLAB_TOKEN n'est pas présente, sortie..."
+        printerror "La variable d'environnement GITLAB_TOKEN n'est pas renseignée, sortie..."
         exit 1
     fi
     if [[ -z $ARTIFACTORY_URL ]]; then
-        printerror "La variable ARTIFACTORY_URL n'est pas présente, sortie..."
+        printerror "La variable d'environnement ARTIFACTORY_URL n'est pas renseignée, sortie..."
         exit 1
     else
         ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_URL"}    
     fi    
     if [[ -z $ARTIFACTORY_USER ]]; then
-        printerror "La variable ARTIFACTORY_USER n'est pas présente, sortie..."
+        printerror "La variable d'environnement ARTIFACTORY_USER n'est pas renseignée, sortie..."
         exit 1
     fi
     if [[ -z $ARTIFACTORY_PASSWORD ]]; then
-        printerror "La variable ARTIFACTORY_PASSWORD n'est pas présente, sortie..."
+        printerror "La variable d'environnement ARTIFACTORY_PASSWORD n'est pas renseignée, sortie..."
         exit 1
     fi    
 }
