@@ -53,6 +53,7 @@ init_env () {
 }
 
 check_docker_env () {
+    DOCKERFILE=${DOCKERFILE:-"Dockerfile"}
     if [[ ! -f $DOCKERFILE ]];then
         printerror "Le fichier $DOCKERFILE n’est pas présent, il doit se trouver à la racine du projet"
         exit 1
