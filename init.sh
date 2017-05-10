@@ -24,10 +24,7 @@ printerror () {
 
 init_env () {
     CONF_DIR=/conf/
-    if [ ! -d $CONF_DIR ]; then
-        printerror "Impossible de trouver le dossier de configuration $CONF_DIR sur le runner"
-        exit 1
-    else
+    if [ -d $CONF_DIR ]; then
         source $CONF_DIR/variables
     fi
     APP_DIR=/usr/src/app/
@@ -39,6 +36,22 @@ init_env () {
         printerror "La variable GITLAB_TOKEN n'est pas présente, sortie..."
         exit 1
     fi
+    if [[ -z $ARTIFACTORY_URL ]]; then
+        printerror "La variable ARTIFACTORY_URL n'est pas présente, sortie..."
+        exit 1
+    fi    
+    if [[ -z $ARTIFACTORY_DOCKER_REGISTRY ]]; then
+        printerror "La variable ARTIFACTORY_DOCKER_REGISTRY n'est pas présente, sortie..."
+        exit 1
+    fi
+    if [[ -z $ARTIFACTORY_USER ]]; then
+        printerror "La variable ARTIFACTORY_USER n'est pas présente, sortie..."
+        exit 1
+    fi
+    if [[ -z $ARTIFACTORY_PASSWORD ]]; then
+        printerror "La variable ARTIFACTORY_PASSWORD n'est pas présente, sortie..."
+        exit 1
+    fi    
 }
 
 REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
