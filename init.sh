@@ -40,10 +40,6 @@ init_env () {
         printerror "La variable ARTIFACTORY_URL n'est pas présente, sortie..."
         exit 1
     fi    
-    if [[ -z $ARTIFACTORY_DOCKER_REGISTRY ]]; then
-        printerror "La variable ARTIFACTORY_DOCKER_REGISTRY n'est pas présente, sortie..."
-        exit 1
-    fi
     if [[ -z $ARTIFACTORY_USER ]]; then
         printerror "La variable ARTIFACTORY_USER n'est pas présente, sortie..."
         exit 1
@@ -54,6 +50,7 @@ init_env () {
     fi    
 }
 
+ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_URL"}
 REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
 GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
 GITLAB_API_URL="$GITLAB_URL/api/v4"
