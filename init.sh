@@ -49,7 +49,16 @@ init_env () {
     if [[ -z $ARTIFACTORY_PASSWORD ]]; then
         printerror "La variable d'environnement ARTIFACTORY_PASSWORD n'est pas renseignée, sortie..."
         exit 1
-    fi    
+    fi
+    
+    ls -l /usr/src/
+    
+    REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
+    GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
+    GITLAB_API_URL="$GITLAB_URL/api/v4"
+    PROJECT_NAME=${REPO_URL##*/}
+    PROJECT_NAMESPACE_URL=${REPO_URL%/$PROJECT_NAME}
+    PROJECT_NAMESPACE=${PROJECT_NAMESPACE_URL##*/}
 }
 
 check_docker_env () {
@@ -64,10 +73,3 @@ check_docker_env () {
         exit 1
     fi    
 }
-
-REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
-GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
-GITLAB_API_URL="$GITLAB_URL/api/v4"
-PROJECT_NAME=${REPO_URL##*/}
-PROJECT_NAMESPACE_URL=${REPO_URL%/$PROJECT_NAME}
-PROJECT_NAMESPACE=${PROJECT_NAMESPACE_URL##*/}
