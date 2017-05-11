@@ -24,8 +24,10 @@ printerror () {
 
 init_env () {
     
-    ls -l /usr/src/
-    
+    if [[ ! "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then 
+        printerror "Le répertoire courant doit être le repo git d'une application"
+        exit 1
+    fi
     CONF_DIR=/conf/
     if [ -d $CONF_DIR ]; then
         source $CONF_DIR/.env
@@ -36,21 +38,21 @@ init_env () {
         exit 1
     fi    
     if [[ -z $GITLAB_TOKEN ]]; then
-        printerror "La variable d'environnement GITLAB_TOKEN n'est pas renseignée, sortie..."
+        printerror "La variable d'environnement GITLAB_TOKEN n'est pas renseignée"
         exit 1
     fi
     if [[ -z $ARTIFACTORY_URL ]]; then
-        printerror "La variable d'environnement ARTIFACTORY_URL n'est pas renseignée, sortie..."
+        printerror "La variable d'environnement ARTIFACTORY_URL n'est pas renseignée"
         exit 1
     else
         ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_URL"}    
     fi    
     if [[ -z $ARTIFACTORY_USER ]]; then
-        printerror "La variable d'environnement ARTIFACTORY_USER n'est pas renseignée, sortie..."
+        printerror "La variable d'environnement ARTIFACTORY_USER n'est pas renseignée"
         exit 1
     fi
     if [[ -z $ARTIFACTORY_PASSWORD ]]; then
-        printerror "La variable d'environnement ARTIFACTORY_PASSWORD n'est pas renseignée, sortie..."
+        printerror "La variable d'environnement ARTIFACTORY_PASSWORD n'est pas renseignée"
         exit 1
     fi
     
