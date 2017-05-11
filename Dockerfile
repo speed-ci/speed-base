@@ -4,7 +4,7 @@ FROM docker-artifactory-poc.sln.nc/docker:17.03.0-ce
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-RUN apk --no-cache add git curl jq bash
+RUN apk --no-cache add git curl jq bash tput
 
 COPY init.sh /init.sh
 RUN chmod +x /init.sh
