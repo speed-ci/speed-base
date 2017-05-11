@@ -25,7 +25,7 @@ printerror () {
 init_env () {
     CONF_DIR=/conf/
     if [ -d $CONF_DIR ]; then
-        source $CONF_DIR/variables
+        source $CONF_DIR/.env
     fi
     APP_DIR=/usr/src/app/
     if [ ! -d $APP_DIR ]; then
