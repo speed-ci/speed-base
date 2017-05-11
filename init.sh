@@ -25,7 +25,7 @@ printerror () {
 init_env () {
     
     if [[ ! "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then 
-        printerror "Le répertoire courant doit être le repo git d'une application"
+        printerror "Le répertoire courant doit être le repo git d'une application et doit être monté comme volume"
         exit 1
     fi
     CONF_DIR=/conf/
