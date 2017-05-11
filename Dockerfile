@@ -13,4 +13,4 @@ RUN chmod +x /init.sh
 ONBUILD COPY docker-entrypoint.sh /docker-entrypoint.sh
 ONBUILD RUN chmod +x /docker-entrypoint.sh
 
-CMD ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
