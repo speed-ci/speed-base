@@ -23,6 +23,9 @@ printerror () {
 }
 
 init_env () {
+    
+    ls -l /usr/src/
+    
     CONF_DIR=/conf/
     if [ -d $CONF_DIR ]; then
         source $CONF_DIR/.env
@@ -50,8 +53,6 @@ init_env () {
         printerror "La variable d'environnement ARTIFACTORY_PASSWORD n'est pas renseignée, sortie..."
         exit 1
     fi
-    
-    ls -l /usr/src/
     
     REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
     GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
