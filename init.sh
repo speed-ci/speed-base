@@ -33,10 +33,6 @@ init_env () {
     if [ -d $CONF_DIR ]; then
         source $CONF_DIR/.env
     fi
-    if [[ -z $GITLAB_TOKEN ]]; then
-        printerror "La variable d'environnement GITLAB_TOKEN doit être renseignée au lancement du container (ex: -e GITLAB_TOKEN=XXXXXXXX)"
-        exit 1
-    fi
     if [[ -z $ARTIFACTORY_URL ]]; then
         printerror "La variable d'environnement ARTIFACTORY_URL doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_URL=https://artifactory.sln.nc)"
         exit 1
@@ -54,11 +50,19 @@ init_env () {
     fi
     
     REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
-    GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
-    GITLAB_API_URL="$GITLAB_URL/api/v4"
     PROJECT_NAME=${REPO_URL##*/}
     PROJECT_NAMESPACE_URL=${REPO_URL%/$PROJECT_NAME}
     PROJECT_NAMESPACE=${PROJECT_NAMESPACE_URL##*/}
+}
+
+int_gitlab_api_env () {
+    if [[ -z $GITLAB_TOKEN ]]; then
+        printerror "La variable d'environnement GITLAB_TOKEN doit être renseignée au lancement du container (ex: -e GITLAB_TOKEN=XXXXXXXX)"
+        exit 1
+    fi
+    
+    GITLAB_URL=`echo $REPO_URL | grep -o 'https\?://[^/]\+/'`
+    GITLAB_API_URL="$GITLAB_URL/api/v4"
 }
 
 check_docker_env () {
