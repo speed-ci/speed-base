@@ -3,6 +3,7 @@ FROM docker-artifactory-poc.sln.nc/docker:17.03.0-ce
 # Setup project folder
 RUN mkdir -p /srv/speed
 WORKDIR /srv/speed
+VOLUME /srv/speed
 
 RUN apk --no-cache add git curl jq bash
 
