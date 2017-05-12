@@ -24,19 +24,15 @@ printerror () {
 
 init_env () {
     
+    APP_DIR=/srv/speed
     if [[ ! "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then 
-        printerror "Le répertoire courant doit être le repo git d'une application et doit être monté comme volume"
+        printerror "Le répertoire git de l'application doit être monté et associé au volume $APP_DIR du container"
         exit 1
     fi
     CONF_DIR=/conf/
     if [ -d $CONF_DIR ]; then
         source $CONF_DIR/.env
     fi
-    APP_DIR=/usr/src/app/
-    if [ ! -d $APP_DIR ]; then
-        printerror "Impossible de trouver le dossier du code source de l'application $APP_DIR sur le runner"
-        exit 1
-    fi    
     if [[ -z $GITLAB_TOKEN ]]; then
         printerror "La variable d'environnement GITLAB_TOKEN n'est pas renseignée"
         exit 1
