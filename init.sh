@@ -26,7 +26,7 @@ init_env () {
     
     APP_DIR=/srv/speed
     if [[ ! "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then 
-        printerror "Le répertoire git de l'application doit être monté et associé au volume $APP_DIR du container"
+        printerror "Le répertoire git de l'application doit être monté et associé au volume $APP_DIR du container (ex: -v $(pwd):/srv/speed)"
         exit 1
     fi
     CONF_DIR=/conf/
@@ -34,21 +34,21 @@ init_env () {
         source $CONF_DIR/.env
     fi
     if [[ -z $GITLAB_TOKEN ]]; then
-        printerror "La variable d'environnement GITLAB_TOKEN n'est pas renseignée"
+        printerror "La variable d'environnement GITLAB_TOKEN doit être renseignée au lancement du container (ex: -e GITLAB_TOKEN=XXXXXXXX)"
         exit 1
     fi
     if [[ -z $ARTIFACTORY_URL ]]; then
-        printerror "La variable d'environnement ARTIFACTORY_URL n'est pas renseignée"
+        printerror "La variable d'environnement ARTIFACTORY_URL doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_URL=https://artifactory.sln.nc)"
         exit 1
     else
         ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_URL"}    
     fi    
     if [[ -z $ARTIFACTORY_USER ]]; then
-        printerror "La variable d'environnement ARTIFACTORY_USER n'est pas renseignée"
+        printerror "La variable d'environnement ARTIFACTORY_USER doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_USER=prenom.nom)"
         exit 1
     fi
     if [[ -z $ARTIFACTORY_PASSWORD ]]; then
-        printerror "La variable d'environnement ARTIFACTORY_PASSWORD n'est pas renseignée"
+        printerror "La variable d'environnement ARTIFACTORY_PASSWORD doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_PASSWORD=XXXXXXXX)"
         exit 1
     fi
     
