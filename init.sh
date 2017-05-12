@@ -68,7 +68,7 @@ check_docker_env () {
     fi
     DOCKER_SOCKET="/var/run/docker.sock"
     if [[ ! -e $DOCKER_SOCKET ]];then
-        printerror "La socket docker $DOCKER_SOCKET n’est pas présente, elle doit être montée au docker run"
+        printerror "La socket docker $DOCKER_SOCKET doit être montée au lancement du container (ex: -v /var/run/docker.sock:/var/run/docker.sock)"
         exit 1
     fi    
 }
