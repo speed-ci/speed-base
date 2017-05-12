@@ -41,7 +41,8 @@ init_env () {
         printerror "La variable d'environnement ARTIFACTORY_URL doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_URL=https://artifactory.sln.nc)"
         exit 1
     else
-        ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_URL"}    
+        ARTIFACTORY_FQDN=${ARTIFACTORY_URL##*/}
+        ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_FQDN"}    
     fi    
     if [[ -z $ARTIFACTORY_USER ]]; then
         printerror "La variable d'environnement ARTIFACTORY_USER doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_USER=prenom.nom)"
