@@ -38,7 +38,6 @@ init_env () {
         exit 1
     else
         if [[ $ARTIFACTORY_URL != https://* ]]; then ARTIFACTORY_URL="https://$ARTIFACTORY_URL"; fi
-
         ARTIFACTORY_FQDN=${ARTIFACTORY_URL##*/}
         ARTIFACTORY_DOCKER_REGISTRY=${ARTIFACTORY_DOCKER_REGISTRY:-"docker-$ARTIFACTORY_FQDN"}    
     fi    
