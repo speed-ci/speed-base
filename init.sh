@@ -25,7 +25,7 @@ printerror () {
 init_env () {
     
     APP_DIR=/srv/speed
-    if [[ ! "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then 
+    if [[ ! "$(git rev-parse --is-inside-work-tree)" ]]; then 
         printerror "Le répertoire git de l'application doit être monté et associé au volume $APP_DIR du container (ex: -v \$(pwd):/srv/speed)"
         exit 1
     fi
