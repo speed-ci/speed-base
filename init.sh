@@ -78,7 +78,7 @@ check_docker_env () {
         exit 1
     fi
     if ! cat $DOCKERFILE | grep -q $ARTIFACTORY_DOCKER_REGISTRY; then 
-        printerror "L'image de base doit être préfixée par la registry docker artifactory $ARTIFACTORY_DOCKER_REGISTRY"
+        printerror "L'image de base utilisée dans le fichier $DOCKERFILE doit être préfixée par la registry docker artifactory $ARTIFACTORY_DOCKER_REGISTRY"
         exit 1
     fi
 }
