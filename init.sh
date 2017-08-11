@@ -50,7 +50,9 @@ init_env () {
         exit 1
     fi
     
-    REPO_URL=$(git config --get remote.origin.url | sed 's/\.git//g' | sed 's/\/\/.*:.*@/\/\//g')
+    REMOTE_ORIGIN_URL=$(git config --get remote.origin.url)
+    if [[ $REMOTE_ORIGIN_URL == git@* ]]; then REPO_URL=$(echo $REMOTE_ORIGIN_URL | sed 's/\.git//g' | sed 's/:/\//g' | sed 's/git@/https:\/\//g'); fi
+    if [[ $REMOTE_ORIGIN_URL == https://* ]]; then REPO_URL=$(echo $REMOTE_ORIGIN_URL | sed 's/\.git//g' | sed 's/\/\/.*@/\/\//g'); fi
     PROJECT_NAME=${REPO_URL##*/}
     PROJECT_NAMESPACE_URL=${REPO_URL%/$PROJECT_NAME}
     PROJECT_NAMESPACE=${PROJECT_NAMESPACE_URL##*/}
