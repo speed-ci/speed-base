@@ -79,7 +79,7 @@ check_docker_env () {
         printerror "La socket docker $DOCKER_SOCKET doit être montée au lancement du container (ex: -v /var/run/docker.sock:/var/run/docker.sock)"
         exit 1
     fi
-    if ! cat $DOCKERFILE | grep -q $ARTIFACTORY_DOCKER_REGISTRY; then 
+    if ! cat $DOCKERFILE | grep -q $ARTIFACTORY_DOCKER_REGISTRY && ! cat $DOCKERFILE | grep -iq "from[[:blank:]]\+scratch"; then 
         printerror "L'image de base utilisée dans le fichier $DOCKERFILE doit être préfixée par la registry docker artifactory $ARTIFACTORY_DOCKER_REGISTRY"
         exit 1
     fi
