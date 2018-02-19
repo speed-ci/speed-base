@@ -56,6 +56,10 @@ init_git_env () {
     fi
 
     REMOTE_ORIGIN_URL=$(git config --get remote.origin.url)
+    if [[ -z $REMOTE_ORIGIN_URL ]]; then
+        printerror "Le projet git doit disposer d'une remote origin url pour pouvoir extraire les nom et namespace du projet (commande: git config add origin <url>)"
+        exit 1
+    fi    
     if [[ $REMOTE_ORIGIN_URL == git@* ]]; then REPO_URL=$(echo $REMOTE_ORIGIN_URL | sed 's/\.git//g' | sed 's/:/\//g' | sed 's/git@/https:\/\//g'); fi
     if [[ $REMOTE_ORIGIN_URL == https://* ]]; then REPO_URL=$(echo $REMOTE_ORIGIN_URL | sed 's/\.git//g' | sed 's/\/\/.*@/\/\//g'); fi
     PROJECT_NAME=${REPO_URL##*/}
