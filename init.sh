@@ -22,13 +22,9 @@ printerror () {
     echo -e "\033[31m==== ERREUR : ${1} \033[37m"
 }
 
-init_env () {
+
+init_artifactory_env () {
     
-    APP_DIR=/srv/speed
-    if [[ ! "$(git rev-parse --is-inside-work-tree)" ]]; then 
-        printerror "Le répertoire git de l'application doit être monté et associé au volume $APP_DIR du container (ex: -v \$(pwd):/srv/speed)"
-        exit 1
-    fi
     CONF_DIR=/conf/
     if [ -d $CONF_DIR ]; then
         source $CONF_DIR/.env
@@ -49,13 +45,28 @@ init_env () {
         printerror "La variable d'environnement ARTIFACTORY_PASSWORD doit être renseignée au lancement du container  (ex: -e ARTIFACTORY_PASSWORD=XXXXXXXX)"
         exit 1
     fi
+}
+
+init_git_env () {
     
+    APP_DIR=/srv/speed
+    if [[ ! "$(git rev-parse --is-inside-work-tree)" ]]; then 
+        printerror "Le répertoire git de l'application doit être monté et associé au volume $APP_DIR du container (ex: -v \$(pwd):/srv/speed)"
+        exit 1
+    fi
+
     REMOTE_ORIGIN_URL=$(git config --get remote.origin.url)
     if [[ $REMOTE_ORIGIN_URL == git@* ]]; then REPO_URL=$(echo $REMOTE_ORIGIN_URL | sed 's/\.git//g' | sed 's/:/\//g' | sed 's/git@/https:\/\//g'); fi
     if [[ $REMOTE_ORIGIN_URL == https://* ]]; then REPO_URL=$(echo $REMOTE_ORIGIN_URL | sed 's/\.git//g' | sed 's/\/\/.*@/\/\//g'); fi
     PROJECT_NAME=${REPO_URL##*/}
     PROJECT_NAMESPACE_URL=${REPO_URL%/$PROJECT_NAME}
     PROJECT_NAMESPACE=${PROJECT_NAMESPACE_URL##*/}
+}
+
+init_env () {
+    
+    init_artifactory_env
+    init_git_env
 }
 
 int_gitlab_api_env () {
