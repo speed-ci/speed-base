@@ -61,6 +61,11 @@ init_git_env () {
     PROJECT_NAME=${REPO_URL##*/}
     PROJECT_NAMESPACE_URL=${REPO_URL%/$PROJECT_NAME}
     PROJECT_NAMESPACE=${PROJECT_NAMESPACE_URL##*/}
+    
+    if [[ -z $BRANCH_NAME ]]; then
+        BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+        BRANCH_NAME=${BRANCH_NAME:-"master"}
+    fi
 }
 
 init_env () {
