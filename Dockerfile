@@ -9,7 +9,7 @@ RUN apk --no-cache add git curl jq bash
 
 ENV YQ_VERSION="1.14.0"
 
-RUN curl -L https://github.com/mikefarah/yq/releases/download/${YQ_LATEST_VERSION}/yq_linux_amd64 -o /usr/local/bin/yq \
+RUN curl -L http://github.com/mikefarah/yq/releases/download/${YQ_LATEST_VERSION}/yq_linux_amd64 -o /usr/local/bin/yq \
  && chmod +x /usr/local/bin/yq
 
 COPY init.sh /init.sh
