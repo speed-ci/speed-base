@@ -21,7 +21,10 @@ printerror () {
     # 31 is red
     echo -e "\033[31m==== ERREUR : ${1} \033[37m"
 }
-
+printcomment () {
+    # 2 is grey
+    echo -e "\033[2m# ${1} \033[22m"
+}
 
 init_artifactory_env () {
     
