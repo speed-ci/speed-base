@@ -5,7 +5,7 @@ RUN mkdir -p /srv/speed
 WORKDIR /srv/speed
 VOLUME /srv/speed
 
-RUN apk --no-cache add git curl jq bash sed
+RUN apk --no-cache add git curl jq bash sed grep
 
 COPY yq /usr/local/bin/yq
 RUN chmod +x /usr/local/bin/yq
